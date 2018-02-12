@@ -9,10 +9,10 @@ public class ZoneDTO {
     private Character letter;
 	
     private VehicleFamilyDTO vehicleFamilyDTO;
-
-//  private List<Garage> garages;
     
 //  private Kindergarten kindergarten;
+    
+    public ZoneDTO() { }
     
     public ZoneDTO(Zone zone) {
     	this.id = zone.getId();

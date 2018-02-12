@@ -1,12 +1,16 @@
 package com.inspt.guarderiacaracol.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.inspt.guarderiacaracol.domain.AppUser;
 import com.inspt.guarderiacaracol.domain.Garage;
+import com.inspt.guarderiacaracol.domain.Vehicle;
+import com.inspt.guarderiacaracol.domain.Zone;
 import com.inspt.guarderiacaracol.dto.GarageDTO;
 import com.inspt.guarderiacaracol.repository.GarageRepository;
 import com.inspt.guarderiacaracol.service.IGarageService;
@@ -26,14 +30,30 @@ public class GarageService implements IGarageService {
 	}
 	
 	@Override
-	public void create(GarageDTO garageDTO) {
-		Garage garage = new Garage();
+	public GarageDTO saveOrUpdate(GarageDTO garageDTO) {
+		Garage garage = garageDTO.getId() != null ? garageRepository.findOne(garageDTO.getId()) : new Garage();
 		populateGarage(garage, garageDTO);
 		garageRepository.save(garage);
+		garageRepository.refresh(garage);
+		return new GarageDTO(garage);
 	}
 	
 	private void populateGarage(Garage garage, GarageDTO garageDTO) {
-		
+		garage.setId(garageDTO.getId());
+		garage.setAppUser(new AppUser(garageDTO.getAppUserDTO().getId()));
+		garage.setMaintenanceService(garageDTO.getMaintenanceService());
+		garage.setZone(new Zone(garageDTO.getZoneDTO().getId()));
+		if (garageDTO.getId() == null) {
+			garage.setAcquireDate(LocalDateTime.now());
+		}
+		if (garageDTO.getVehicleDTO() != null && garageDTO.getVehicleDTO().getId() != null) {
+			if (garage.getVehicle() == null || !garageDTO.getVehicleDTO().getId().equals(garage.getVehicle().getId())) {
+				garage.setVehicleAssignationDate(LocalDateTime.now());
+			}
+			garage.setVehicle(new Vehicle(garageDTO.getVehicleDTO().getId()));
+		} else {
+			garageDTO.setVehicleDTO(null);
+		}
 	}
 	
 }

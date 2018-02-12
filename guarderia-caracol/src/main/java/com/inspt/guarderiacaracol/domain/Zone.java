@@ -40,6 +40,12 @@ public class Zone implements Serializable {
     @ManyToOne
     @JoinColumn(name = "ZONE_KIGA_ID", foreignKey = @ForeignKey(name = "ZONE_KIGA_FK"))
     private Kindergarten kindergarten;
+    
+    public Zone() { }
+    
+    public Zone(Long id) {
+    	this.id = id;
+    }
 
 	public Long getId() {
 		return id;

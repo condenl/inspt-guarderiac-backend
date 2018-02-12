@@ -10,4 +10,6 @@ public interface IVehicleService {
 	
 	VehicleDTO saveOrUpdate(VehicleDTO vehicleDTO);
 	
+	List<VehicleDTO> findByUserId(Long id);
+	
 }

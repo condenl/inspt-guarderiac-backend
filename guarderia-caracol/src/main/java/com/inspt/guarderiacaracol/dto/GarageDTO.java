@@ -2,6 +2,7 @@ package com.inspt.guarderiacaracol.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inspt.guarderiacaracol.domain.Garage;
 
 public class GarageDTO {
@@ -14,13 +15,17 @@ public class GarageDTO {
 	
     private Integer kWHConsumed;
     
-    private Long vehicleId;
+    private VehicleDTO vehicleDTO;
     
+    @JsonIgnore
     private LocalDateTime vehicleAssignationDate;
     
+    @JsonIgnore
     private LocalDateTime acquireDate;
     
-    private Long appUserId;
+    private AppUserDTO appUserDTO;
+    
+    private ZoneDTO zoneDTO;
     
     public GarageDTO() { }
 
@@ -29,10 +34,11 @@ public class GarageDTO {
     	this.stateCounter = garage.getStateCounter();
     	this.maintenanceService = garage.getMaintenanceService();
     	this.kWHConsumed = garage.getkWHConsumed();
-    	this.vehicleId = garage.getVehicle() != null ? garage.getVehicle().getId(): null;
+    	this.vehicleDTO = garage.getVehicle() != null ? new VehicleDTO(garage.getVehicle()) : null;
     	this.vehicleAssignationDate = garage.getVehicleAssignationDate();
     	this.acquireDate = garage.getAcquireDate();
-    	this.appUserId = garage.getAppUser() != null ? garage.getAppUser().getId() : null;
+    	this.appUserDTO = new AppUserDTO(garage.getAppUser());
+    	this.zoneDTO = new ZoneDTO(garage.getZone());
     }
     
 	public Long getId() {
@@ -67,12 +73,12 @@ public class GarageDTO {
 		this.kWHConsumed = kWHConsumed;
 	}
 
-	public Long getVehicleId() {
-		return vehicleId;
+	public VehicleDTO getVehicleDTO() {
+		return vehicleDTO;
 	}
 
-	public void setVehicleId(Long vehicleId) {
-		this.vehicleId = vehicleId;
+	public void setVehicleDTO(VehicleDTO vehicleDTO) {
+		this.vehicleDTO = vehicleDTO;
 	}
 
 	public LocalDateTime getVehicleAssignationDate() {
@@ -91,12 +97,20 @@ public class GarageDTO {
 		this.acquireDate = acquireDate;
 	}
 
-	public Long getAppUserId() {
-		return appUserId;
+	public AppUserDTO getAppUserDTO() {
+		return appUserDTO;
 	}
 
-	public void setAppUserId(Long appUserId) {
-		this.appUserId = appUserId;
+	public void setAppUserDTO(AppUserDTO appUserDTO) {
+		this.appUserDTO = appUserDTO;
 	}
     
+	public ZoneDTO getZoneDTO() {
+		return zoneDTO;
+	}
+	
+	public void setZoneDTO(ZoneDTO zoneDTO) {
+		this.zoneDTO = zoneDTO;
+	}
+	
 }

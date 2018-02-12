@@ -8,7 +8,7 @@ public interface IGarageService {
 	
 	List<GarageDTO> findByZoneId(Long id);
 	
-	void create(GarageDTO garageDTO);
+	GarageDTO saveOrUpdate(GarageDTO garageDTO);
 	
 }
 

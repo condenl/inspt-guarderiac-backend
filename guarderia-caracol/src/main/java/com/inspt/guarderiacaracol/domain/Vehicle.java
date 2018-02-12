@@ -39,6 +39,12 @@ public class Vehicle implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "VEHI_APUS_ID", foreignKey = @ForeignKey(name = "VEHI_APUS_FK"))
     private AppUser appUser;
+	
+	public Vehicle() { }
+	
+	public Vehicle(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;

@@ -38,6 +38,14 @@ public class VehicleService implements IVehicleService {
 		return new VehicleDTO(vehicleRepository.findOne(vehicle.getId()));
 	}
 	
+	@Override
+	public List<VehicleDTO> findByUserId(Long id) {
+		return vehicleRepository.findByAppUserId(id)
+				.stream()
+				.map(VehicleDTO::new)
+				.collect(Collectors.toList());
+	}
+	
 	private void populateVehicle(Vehicle vehicle, VehicleDTO vehicleDTO) {
 		vehicle.setId(vehicleDTO.getId());
 		if (vehicleDTO.getAppUserDTO() != null && vehicleDTO.getAppUserDTO().getId() != null) {
