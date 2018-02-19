@@ -31,7 +31,7 @@ public class Garage implements Serializable {
     private Integer stateCounter;
 	
 	@Column(name = "GARA_MAINT_SERV")
-    private Boolean maintenanceService;
+    private boolean maintenanceService;
 	
 	@Column(name = "GARA_KWH_CONSUMED")
     private Integer kWHConsumed;
@@ -70,11 +70,11 @@ public class Garage implements Serializable {
 		this.stateCounter = stateCounter;
 	}
 
-	public Boolean getMaintenanceService() {
+	public boolean getMaintenanceService() {
 		return maintenanceService;
 	}
 
-	public void setMaintenanceService(Boolean maintenanceService) {
+	public void setMaintenanceService(boolean maintenanceService) {
 		this.maintenanceService = maintenanceService;
 	}
 

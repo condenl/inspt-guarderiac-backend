@@ -13,6 +13,8 @@ public class VehicleDTO {
     private VehicleFamilyDTO vehicleFamilyDTO;
     
     private AppUserDTO appUserDTO;
+    
+    private PhotoDTO photoDTO;
 	
     public VehicleDTO() { }
     
@@ -24,7 +26,10 @@ public class VehicleDTO {
 		if (vehicle.getAppUser() != null) {
 			this.appUserDTO = new AppUserDTO(vehicle.getAppUser());
 		}
-	}
+		if (vehicle.getPhoto() != null) {
+			this.photoDTO = new PhotoDTO(vehicle.getPhoto());
+		}
+ 	}
 
 	public Long getId() {
 		return id;
@@ -64,6 +69,14 @@ public class VehicleDTO {
 
 	public void setAppUserDTO(AppUserDTO appUserDTO) {
 		this.appUserDTO = appUserDTO;
+	}
+	
+	public PhotoDTO getPhotoDTO() {
+		return photoDTO;
+	}
+	
+	public void setPhotoDTO(PhotoDTO photoDTO) {
+		this.photoDTO = photoDTO;
 	}
 	
 }

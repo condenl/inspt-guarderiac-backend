@@ -1,6 +1,9 @@
 package com.inspt.guarderiacaracol.service.impl;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inspt.guarderiacaracol.domain.AppUser;
+import com.inspt.guarderiacaracol.domain.Photo;
 import com.inspt.guarderiacaracol.domain.Vehicle;
 import com.inspt.guarderiacaracol.domain.VehicleFamily;
 import com.inspt.guarderiacaracol.dto.VehicleDTO;
@@ -16,6 +20,8 @@ import com.inspt.guarderiacaracol.service.IVehicleService;
 
 @Service
 public class VehicleService implements IVehicleService {
+	
+	private static final Logger LOG = Logger.getLogger(VehicleService.class.getName());
 	
 	@Autowired
 	private VehicleRepository vehicleRepository;
@@ -46,6 +52,14 @@ public class VehicleService implements IVehicleService {
 				.collect(Collectors.toList());
 	}
 	
+	@Override
+	public List<VehicleDTO> findByUserAndFamily(Long ownerId, Long vehicleFamilyId) {
+		return vehicleRepository.findByAppUserIdAndVehicleFamilyId(ownerId, vehicleFamilyId)
+				.stream()
+				.map(VehicleDTO::new)
+				.collect(Collectors.toList());
+	}
+	
 	private void populateVehicle(Vehicle vehicle, VehicleDTO vehicleDTO) {
 		vehicle.setId(vehicleDTO.getId());
 		if (vehicleDTO.getAppUserDTO() != null && vehicleDTO.getAppUserDTO().getId() != null) {
@@ -54,6 +68,13 @@ public class VehicleService implements IVehicleService {
 		vehicle.setVehicleFamily(new VehicleFamily(vehicleDTO.getVehicleFamilyDTO().getId()));
 		vehicle.setEnrollment(vehicleDTO.getEnrollment());
 		vehicle.setName(vehicleDTO.getName());
+		if(vehicleDTO.getPhotoDTO() != null && vehicleDTO.getPhotoDTO().getId() == null && vehicleDTO.getPhotoDTO().getFile() != null) {
+			try {
+				vehicle.setPhoto(new Photo(vehicleDTO.getPhotoDTO().getFile().getBytes()));
+			} catch (IOException e) {
+				LOG.log(Level.SEVERE, "Error getting bytes from vehicle(enrollment: " + vehicle.getEnrollment() + ") photo", e);
+			}
+		}
 	}
 	
 }

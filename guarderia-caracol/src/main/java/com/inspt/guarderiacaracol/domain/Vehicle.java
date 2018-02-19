@@ -2,8 +2,10 @@ package com.inspt.guarderiacaracol.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,9 +38,13 @@ public class Vehicle implements Serializable {
 	@JoinColumn(name = "VEHI_VEFA_ID", nullable = false, foreignKey = @ForeignKey(name = "VEHI_VEFA_FK"))
     private VehicleFamily vehicleFamily;
     
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "VEHI_APUS_ID", foreignKey = @ForeignKey(name = "VEHI_APUS_FK"))
     private AppUser appUser;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "VEHI_PHOT_ID", foreignKey = @ForeignKey(name = "VEHI_PHOT_FK"))
+	private Photo photo;
 	
 	public Vehicle() { }
 	
@@ -84,6 +90,14 @@ public class Vehicle implements Serializable {
 
 	public void setAppUser(AppUser appUser) {
 		this.appUser = appUser;
+	}
+	
+	public Photo getPhoto() {
+		return photo;
+	}
+	
+	public void setPhoto(Photo photo) {
+		this.photo = photo;
 	}
 
 	@Override

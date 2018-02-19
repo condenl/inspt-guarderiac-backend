@@ -2,7 +2,7 @@ package com.inspt.guarderiacaracol.dto;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.inspt.guarderiacaracol.domain.AppUser;
 
 public class AppUserDTO {
@@ -17,7 +17,7 @@ public class AppUserDTO {
     
     private String phone;
     
-    @JsonIgnore
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime entryDate;
     
     private String username;

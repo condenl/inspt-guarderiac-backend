@@ -2,7 +2,7 @@ package com.inspt.guarderiacaracol.dto;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.inspt.guarderiacaracol.domain.Garage;
 
 public class GarageDTO {
@@ -11,16 +11,16 @@ public class GarageDTO {
 	
     private Integer stateCounter;
 	
-    private Boolean maintenanceService;
+    private boolean maintenanceService;
 	
     private Integer kWHConsumed;
     
     private VehicleDTO vehicleDTO;
     
-    @JsonIgnore
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime vehicleAssignationDate;
     
-    @JsonIgnore
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime acquireDate;
     
     private AppUserDTO appUserDTO;
@@ -57,11 +57,11 @@ public class GarageDTO {
 		this.stateCounter = stateCounter;
 	}
 
-	public Boolean getMaintenanceService() {
+	public boolean getMaintenanceService() {
 		return maintenanceService;
 	}
 
-	public void setMaintenanceService(Boolean maintenanceService) {
+	public void setMaintenanceService(boolean maintenanceService) {
 		this.maintenanceService = maintenanceService;
 	}
 

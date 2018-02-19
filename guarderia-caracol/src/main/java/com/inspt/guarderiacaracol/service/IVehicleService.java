@@ -12,4 +12,6 @@ public interface IVehicleService {
 	
 	List<VehicleDTO> findByUserId(Long id);
 	
+	List<VehicleDTO> findByUserAndFamily(Long ownerId, Long vehicleFamilyId);
+	
 }
