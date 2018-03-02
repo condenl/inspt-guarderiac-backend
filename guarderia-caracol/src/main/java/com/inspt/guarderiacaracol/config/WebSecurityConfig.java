@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic()
 			.and()
 				.authorizeRequests()
-				.antMatchers("/index.html", "/", "/api/**").permitAll() //, "/home", "/login"
+				.antMatchers("/index.html", "/", "/api/**").permitAll()
 				.anyRequest().authenticated()
 			.and()
 				.csrf()
@@ -54,7 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.formLogin()
 				.loginPage("/")
-				.failureUrl("/login?error=true")
 				.usernameParameter("username")
 				.passwordParameter("password");
 	}

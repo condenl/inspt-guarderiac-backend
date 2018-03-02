@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +33,13 @@ public class ManageVehicleController {
 		return vehicleDTOs;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/vehicles/create", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody VehicleDTO createVehicle(VehicleDTO vehicleDTO) {
 		return vehicleService.saveOrUpdate(vehicleDTO);
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE', 'PARTNER')")
 	@RequestMapping(value = "/vehicles/user/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<VehicleDTO> getUserVehicles(@PathVariable(required = true) Long userId) {
 		return vehicleService.findByUserId(userId);
